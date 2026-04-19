@@ -4,11 +4,15 @@
   "hostname": "Dwaynes-MacBook-Pro.local",
   "pid": 867,
   "started_at": "2026-04-19T09:10:00+10:00",
-  "last_heartbeat": "2026-04-19T15:21:00+10:00",
+  "last_heartbeat": "2026-04-19T16:11:30+1000",
   "current_task": "security-monitoring",
   "status": "running",
   "pm2_processes": {
-    "sentinel": {"pid": 867, "status": "online", "uptime": "6h"}
+    "sentinel": {
+      "pid": 867,
+      "status": "online",
+      "uptime": "6h"
+    }
   },
   "cron_context": {},
   "startup_prompt": "You are the sentinel agent on [pro]. Security monitoring and threat detection.",
