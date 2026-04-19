@@ -1,0 +1,18 @@
+{
+  "agent": "pro-2",
+  "host": "pro-2",
+  "hostname": "Dwaynes-MacBook-Pro-2.local",
+  "pid": 20594,
+  "started_at": "2026-04-19T09:09:00+10:00",
+  "last_heartbeat": "2026-04-19T15:21:00+10:00",
+  "current_task": "home-assistant-host",
+  "status": "running",
+  "pm2_processes": {
+    "openclaw-gateway": {"pid": 20594, "status": "online"},
+    "home-assistant": {"pid": 0, "status": "unknown"}
+  },
+  "cron_context": {},
+  "startup_prompt": "You are the zappo agent on [pro-2]. Home Assistant host. lan 192.168.68.56, tscale 100.95.185.57.",
+  "known_issues": [],
+  "git_sha": ""
+}

@@ -1,0 +1,172 @@
+{
+  "agent": "pro",
+  "host": "pro",
+  "hostname": "Dwaynes-MacBook-Pro.local",
+  "pid": 589,
+  "started_at": "2026-04-19T09:09:00+10:00",
+  "last_heartbeat": "2026-04-19T15:23:57+10:00",
+  "current_task": "agent-state implementation",
+  "status": "running",
+  "pm2_processes": {
+    "openclaw-gateway": {
+      "pid": 589,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "openclaw-evolution": {
+      "pid": 29532,
+      "status": "online",
+      "uptime": "3h"
+    },
+    "sentinel": {
+      "pid": 867,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "oc-voice-bridge": {
+      "pid": 870,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "swarm-ws": {
+      "pid": 868,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "swarm-sentinel": {
+      "pid": 874,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "openclaw-workflows": {
+      "pid": 871,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-api": {
+      "pid": 851,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-web": {
+      "pid": 857,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-q": {
+      "pid": 850,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-health": {
+      "pid": 852,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-x": {
+      "pid": 875,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-x-eth": {
+      "pid": 858,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-omega": {
+      "pid": 872,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "nexus-aether": {
+      "pid": 849,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "eq-aether": {
+      "pid": 859,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "eq-crypto": {
+      "pid": 863,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "eq-nasdaq": {
+      "pid": 862,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "eq-web": {
+      "pid": 861,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "oc-location": {
+      "pid": 866,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "oc-status-page": {
+      "pid": 865,
+      "status": "online",
+      "uptime": "6h"
+    },
+    "trend-hunter": {
+      "pid": 860,
+      "status": "online",
+      "uptime": "6h"
+    }
+  },
+  "cron_context": {
+    "pergolux-realm": {
+      "cron_id": "dee51077-9f79-4c7b-93db-8b01c03c28d9",
+      "schedule": "every 15m",
+      "last_run": "2026-04-19T15:14:00+10:00",
+      "status": "ok",
+      "model": "glm-5.1:cloud"
+    },
+    "stock-tracker": {
+      "cron_id": "8fe23436-63d6-4671-9979-319e4756217f",
+      "schedule": "0 18 * * *",
+      "last_run": null,
+      "status": "pending",
+      "model": "-"
+    },
+    "daily-update-status": {
+      "cron_id": "cb8820d2-ea50-435b-941b-3f60ce2cdf84",
+      "schedule": "30 2 * * *",
+      "last_run": null,
+      "status": "pending",
+      "model": "glm-5.1:cloud"
+    },
+    "weekly-health-processor": {
+      "cron_id": "8913ee15-e92c-470e-bcf5-acee10818e80",
+      "schedule": "0 3 * * 1",
+      "last_run": null,
+      "status": "pending",
+      "model": "glm-5.1:cloud"
+    },
+    "daily-stock-tracker": {
+      "cron_id": "bf7e6c61-fb6d-4c87-8846-263371e6dd12",
+      "schedule": "0 18 * * 1-5",
+      "last_run": null,
+      "status": "pending",
+      "model": "glm-5.1:cloud"
+    },
+    "weekly-security-audit": {
+      "cron_id": "c25f08ea-7e18-4c31-bfec-da74056069b1",
+      "schedule": "0 2 * * 0",
+      "last_run": null,
+      "status": "pending",
+      "model": "glm-5.1:cloud"
+    }
+  },
+  "startup_prompt": "You are the Musk agent on [pro]. Dwaynes-MacBook-Pro.local. lan 192.168.68.97, tscale 100.87.212.111. Manage all PM2 processes, crons, and state persistence. Check agent-state/ for resume context.",
+  "known_issues": [
+    "ollama-cloud-502s",
+    "doge-offline-since-2026-04-15"
+  ],
+  "git_sha": ""
+}

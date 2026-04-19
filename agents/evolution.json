@@ -1,0 +1,17 @@
+{
+  "agent": "evolution",
+  "host": "pro",
+  "hostname": "Dwaynes-MacBook-Pro.local",
+  "pid": 29532,
+  "started_at": "2026-04-19T11:57:00+10:00",
+  "last_heartbeat": "2026-04-19T15:21:00+10:00",
+  "current_task": "evolution-watchdog",
+  "status": "running",
+  "pm2_processes": {
+    "openclaw-evolution": {"pid": 29532, "status": "online", "uptime": "3h"}
+  },
+  "cron_context": {},
+  "startup_prompt": "You are the evolution daemon on [pro]. Self-improving agent watchdog.",
+  "known_issues": [],
+  "git_sha": ""
+}
