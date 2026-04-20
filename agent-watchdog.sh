@@ -22,7 +22,67 @@ log() {
 # Check if a PID is alive
 pid_alive() {
     local pid="$1"
+    [[ -z "$pid" || "$pid" == "0" ]] && return 1
     kill -0 "$pid" 2>/dev/null
+}
+
+# Map watchdog agent name → PM2 process name. Empty echo = not PM2-managed.
+pm2_name_for_agent() {
+    case "$1" in
+        evolution) echo "openclaw-evolution" ;;
+        sentinel)  echo "sentinel" ;;
+        *)         echo "" ;;
+    esac
+}
+
+# Cache pm2 jlist for the duration of one watchdog run (avoid N invocations).
+_PM2_JLIST_CACHE=""
+_pm2_jlist_cached() {
+    if [[ -z "$_PM2_JLIST_CACHE" ]]; then
+        _PM2_JLIST_CACHE="$(pm2 jlist 2>/dev/null || echo '[]')"
+    fi
+    printf '%s' "$_PM2_JLIST_CACHE"
+}
+
+# Live PID of a PM2 process by name. Echoes "" if not found, not online, or no PID.
+get_pm2_pid() {
+    local name="$1"
+    [[ -z "$name" ]] && return
+    _pm2_jlist_cached | python3 -c "
+import json, sys
+try:
+    procs = json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+for p in procs:
+    if p.get('name') == '$name':
+        env = p.get('pm2_env') or {}
+        if env.get('status') == 'online':
+            pid = env.get('pid') or p.get('pid') or 0
+            if pid:
+                print(pid)
+        break
+" 2>/dev/null
+}
+
+# Sync the JSON state file's pid field to the live value (best-effort, non-fatal).
+sync_pid_in_state() {
+    local agent_file="$1"
+    local new_pid="$2"
+    [[ -z "$new_pid" ]] && return
+    python3 -c "
+import json
+p = '$agent_file'
+with open(p) as f:
+    d = json.load(f)
+d['pid'] = int('$new_pid')
+pm2 = d.get('pm2_processes') or {}
+for k in pm2:
+    if isinstance(pm2[k], dict):
+        pm2[k]['pid'] = int('$new_pid')
+with open(p, 'w') as f:
+    json.dump(d, f, indent=2)
+" 2>/dev/null || log "WARN: Failed to sync pid for $agent_file"
 }
 
 # Get current git SHA
@@ -89,6 +149,23 @@ main() {
         agent_status="$(python3 -c "import json; d=json.load(open('$agent_file')); print(d.get('status','unknown'))" 2>/dev/null || echo "error")"
         pid="$(python3 -c "import json; d=json.load(open('$agent_file')); print(d.get('pid',0))" 2>/dev/null || echo "0")"
         last_heartbeat="$(python3 -c "import json; d=json.load(open('$agent_file')); print(d.get('last_heartbeat',''))" 2>/dev/null || echo "")"
+
+        # For PM2-managed agents, the source of truth for PID is `pm2 jlist`,
+        # not the JSON file (which gets stale across PM2 restarts and was the
+        # cause of repeated false-alarm restart loops). Prefer the live PID
+        # and write it back to the JSON so external readers stay consistent.
+        local pm2_name pm2_pid
+        pm2_name="$(pm2_name_for_agent "$agent_name")"
+        if [[ -n "$pm2_name" ]]; then
+            pm2_pid="$(get_pm2_pid "$pm2_name")"
+            if [[ -n "$pm2_pid" && "$pm2_pid" != "$pid" ]]; then
+                log "  PM2 reports $pm2_name PID=$pm2_pid (state file had $pid) — syncing"
+                if ! $DRY_RUN; then
+                    sync_pid_in_state "$agent_file" "$pm2_pid"
+                fi
+                pid="$pm2_pid"
+            fi
+        fi
 
         log "Checking agent: $agent_name (PID=$pid, status=$agent_status)"
 
