@@ -202,6 +202,17 @@ main() {
         fi
 
         # Check 2: Is the heartbeat stale?
+        # Skip for PM2-managed agents: PM2 itself handles crash-restart, and
+        # heartbeat staleness is only meaningful when a writer maintains the
+        # field — neither evolution_daemon.py nor sentinel.py currently do.
+        # Falsely tripping here was the second false-alarm restart loop.
+        if [[ -n "$pm2_name" ]]; then
+            if ! $DRY_RUN; then
+                update_heartbeat "$agent_file"
+            fi
+            log "  Agent $agent_name: OK (PM2-managed, PID=$pid online)"
+            continue
+        fi
         if [[ -n "$last_heartbeat" ]]; then
             local now_epoch hb_epoch stale_diff
             now_epoch="$(date +%s)"
