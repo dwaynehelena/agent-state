@@ -2,14 +2,14 @@
   "agent": "evolution",
   "host": "pro",
   "hostname": "Dwaynes-MacBook-Pro.local",
-  "pid": 62837,
+  "pid": 78533,
   "started_at": "2026-04-19T11:57:00+10:00",
-  "last_heartbeat": "2026-04-24T12:06:02+1000",
+  "last_heartbeat": "2026-04-24T12:07:07+1000",
   "current_task": "evolution-watchdog",
   "status": "running",
   "pm2_processes": {
     "openclaw-evolution": {
-      "pid": 62837,
+      "pid": 78533,
       "status": "online",
       "uptime": "3h"
     }
