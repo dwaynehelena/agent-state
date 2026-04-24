@@ -2,14 +2,14 @@
   "agent": "sentinel",
   "host": "pro",
   "hostname": "Dwaynes-MacBook-Pro.local",
-  "pid": 33138,
+  "pid": 55301,
   "started_at": "2026-04-19T09:10:00+10:00",
-  "last_heartbeat": "2026-04-24T10:49:46+1000",
+  "last_heartbeat": "2026-04-24T10:50:54+1000",
   "current_task": "security-monitoring",
   "status": "running",
   "pm2_processes": {
     "sentinel": {
-      "pid": 33138,
+      "pid": 55301,
       "status": "online",
       "uptime": "6h"
     }
