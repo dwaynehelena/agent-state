@@ -2,119 +2,119 @@
   "agent": "pro",
   "host": "pro",
   "hostname": "Dwaynes-MacBook-Pro.local",
-  "pid": 589,
+  "pid": 828,
   "started_at": "2026-04-19T09:09:00+10:00",
-  "last_heartbeat": "2026-04-19T19:25:14+1000",
+  "last_heartbeat": "2026-04-28T15:39:04+1000",
   "current_task": "agent-state implementation",
   "status": "running",
   "pm2_processes": {
     "openclaw-gateway": {
-      "pid": 589,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "openclaw-evolution": {
-      "pid": 29532,
+      "pid": 828,
       "status": "online",
       "uptime": "3h"
     },
     "sentinel": {
-      "pid": 867,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "oc-voice-bridge": {
-      "pid": 870,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "swarm-ws": {
-      "pid": 868,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "swarm-sentinel": {
-      "pid": 874,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "openclaw-workflows": {
-      "pid": 871,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-api": {
-      "pid": 851,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-web": {
-      "pid": 857,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-q": {
-      "pid": 850,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-health": {
-      "pid": 852,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-x": {
-      "pid": 875,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-x-eth": {
-      "pid": 858,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-omega": {
-      "pid": 872,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "nexus-aether": {
-      "pid": 849,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "eq-aether": {
-      "pid": 859,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "eq-crypto": {
-      "pid": 863,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "eq-nasdaq": {
-      "pid": 862,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "eq-web": {
-      "pid": 861,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "oc-location": {
-      "pid": 866,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "oc-status-page": {
-      "pid": 865,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     },
     "trend-hunter": {
-      "pid": 860,
+      "pid": 828,
       "status": "online",
       "uptime": "6h"
     }

@@ -105,11 +105,17 @@ restart_pm2() {
 # Restart openclaw-gateway
 restart_gateway() {
     if $DRY_RUN; then
-        log "DRY-RUN: Would restart openclaw-gateway"
+        log "DRY-RUN: Would restart launchd service: ai.openclaw.gateway"
     else
-        log "RESTART: Restarting openclaw-gateway"
-        pm2 restart openclaw-gateway 2>&1 | tee -a "$LOG_FILE" || true
+        log "RESTART: Restarting launchd service: ai.openclaw.gateway"
+        launchctl kickstart -k "gui/$(id -u)/ai.openclaw.gateway" 2>&1 | tee -a "$LOG_FILE" || true
     fi
+}
+
+# Live PID of a launchd service by label. Echoes "" if not found or not running.
+get_launchd_pid() {
+    local label="$1"
+    launchctl print "gui/$(id -u)/$label" 2>/dev/null | awk -F'= ' '/^[[:space:]]*pid = / { print $2; exit }'
 }
 
 # Update heartbeat in state file
@@ -159,11 +165,26 @@ main() {
         if [[ -n "$pm2_name" ]]; then
             pm2_pid="$(get_pm2_pid "$pm2_name")"
             if [[ -n "$pm2_pid" && "$pm2_pid" != "$pid" ]]; then
-                log "  PM2 reports $pm2_name PID=$pm2_pid (state file had $pid) — syncing"
+                log "  PM2 reports $pm2_name PID=$pm2_pid (state file had $pid) - syncing"
                 if ! $DRY_RUN; then
                     sync_pid_in_state "$agent_file" "$pm2_pid"
                 fi
                 pid="$pm2_pid"
+            fi
+        fi
+
+        # `pro` represents the local OpenClaw gateway, which is launchd-owned
+        # on macOS. PM2 does not have an `openclaw-gateway` entry here, so use
+        # launchd as the source of truth and keep the JSON PID in sync.
+        if [[ "$agent_name" == "pro" ]]; then
+            local launchd_pid
+            launchd_pid="$(get_launchd_pid "ai.openclaw.gateway")"
+            if [[ -n "$launchd_pid" && "$launchd_pid" != "$pid" ]]; then
+                log "  launchd reports ai.openclaw.gateway PID=$launchd_pid (state file had $pid) - syncing"
+                if ! $DRY_RUN; then
+                    sync_pid_in_state "$agent_file" "$launchd_pid"
+                fi
+                pid="$launchd_pid"
             fi
         fi
 
@@ -211,6 +232,13 @@ main() {
                 update_heartbeat "$agent_file"
             fi
             log "  Agent $agent_name: OK (PM2-managed, PID=$pid online)"
+            continue
+        fi
+        if [[ "$agent_name" == "pro" ]]; then
+            if ! $DRY_RUN; then
+                update_heartbeat "$agent_file"
+            fi
+            log "  Agent $agent_name: OK (launchd-managed, PID=$pid running)"
             continue
         fi
         if [[ -n "$last_heartbeat" ]]; then
