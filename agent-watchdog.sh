@@ -196,6 +196,13 @@ main() {
             continue
         fi
 
+        # Remote agent PIDs are only meaningful on their source host. Checking
+        # them with kill(0) from pro creates permanent false alerts.
+        if [[ "$agent_name" == "pro-2" ]]; then
+            log "  Agent $agent_name: remote state entry; skipping local PID check"
+            continue
+        fi
+
         # Check 1: Is the PID alive?
         if ! pid_alive "$pid"; then
             log "ALERT: Agent $agent_name PID $pid is DEAD (status=$agent_status)"
